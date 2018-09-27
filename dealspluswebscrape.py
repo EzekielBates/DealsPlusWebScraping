@@ -39,7 +39,9 @@ def searchForGoodDeals(url,profitMargin,cost):
                     currentF = float(current[1:6])
                     dif = float(original[1:6])-float(current[1:6])
                 except:
-                    print("Incorrect Price Format. Cannot use data")
+                    top = i.find(class_="top")
+                    href = top.find('a',href=True)
+                    print("Incorrect Price Format. Cannot use data. URL:(" + "dealsplus.com" + href['href'] + ')')
                 
 
             if dif > profitMargin and currentF < cost:
