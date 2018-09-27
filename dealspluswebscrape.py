@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 
 #TODO make the program so it parses through all data not just most of it
+#TODO make the program output data in a more appealing way
 #finds the number of pages to be searched through
 def findNumOfPages(page,url):
     urlTag = "&page="
