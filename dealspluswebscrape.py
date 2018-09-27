@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-#TODO make the program so it parses through all data not just most
+#TODO make the program so it parses through all data not just most of it
 #finds the number of pages to be searched through
 def findNumOfPages(page,url):
     urlTag = "&page="
@@ -28,6 +28,7 @@ def findNumOfPages(page,url):
     intNumber += 1
     return intNumber
 
+#searches thorugh all pages of a specific category and outputs information based on the cost and profitmargin specified
 def searchForGoodDeals(url,profitMargin,cost):
     page = requests.get(url)
     numOfPages = findNumOfPages(page,url)
