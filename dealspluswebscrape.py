@@ -34,11 +34,13 @@ def searchForGoodDeals(url,profitMargin,cost):
     page = requests.get(url)
     numOfPages = findNumOfPages(page,url)
     intervals = 0
+    #where the items that fit into the criteria will be stored
     titles = []
+
     while numOfPages >= intervals:
         soup = BeautifulSoup(page.content, 'html.parser')
         middle = soup.find_all('div',class_="itemTileV5")
-        
+        #searches through middle to find products that fit within the categories specified in the parameters
         for i in middle:
             current = i.find(class_="currentPrice").get_text()
             original = i.find(class_="originalPrice").get_text() 
@@ -46,6 +48,7 @@ def searchForGoodDeals(url,profitMargin,cost):
             #originalF = 0.0
             dif = 0.0
             if current != '' and original != '':
+                #handles if the currentF or dif values aren't float values
                 try:
                     currentF = float(current[1:6])
                     dif = float(original[1:6])-float(current[1:6])
@@ -54,7 +57,7 @@ def searchForGoodDeals(url,profitMargin,cost):
                     href = top.find('a',href=True)
                     print("Incorrect Price Format.Cannot use data. URL:(" + "dealsplus.com" + href['href'] + ')')
                 
-
+            #decides if the item should be put into the titles list
             if dif > profitMargin and currentF < cost:
                 top = i.find(class_="top")
                 href = top.find('a',href=True)
