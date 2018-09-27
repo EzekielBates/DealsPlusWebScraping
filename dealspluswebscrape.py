@@ -1,5 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
+
+#TODO make the program so it parses through all data not just most
+
 #finds the number of pages to be searched through
 def findNumOfPages(page,url):
     soup = BeautifulSoup(page.content,'html.parser')
@@ -41,7 +44,7 @@ def searchForGoodDeals(url,profitMargin,cost):
                 except:
                     top = i.find(class_="top")
                     href = top.find('a',href=True)
-                    print("Incorrect Price Format. Cannot use data. URL:(" + "dealsplus.com" + href['href'] + ')')
+                    print("Incorrect Price Format.Cannot use data. URL:(" + "dealsplus.com" + href['href'] + ')')
                 
 
             if dif > profitMargin and currentF < cost:
@@ -55,4 +58,4 @@ def searchForGoodDeals(url,profitMargin,cost):
     for i in titles:
             print(i)
 
-searchForGoodDeals("https://www.dealsplus.com/Sports-and-Outdoor-Gear_deals?sort=newest",150,50)
+searchForGoodDeals("https://www.dealsplus.com/All-Electronics_deals?sort=newest",150,50)
