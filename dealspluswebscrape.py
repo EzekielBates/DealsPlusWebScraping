@@ -2,18 +2,24 @@ import requests
 from bs4 import BeautifulSoup
 
 #TODO make the program so it parses through all data not just most
-
 #finds the number of pages to be searched through
 def findNumOfPages(page,url):
+    urlTag = "&page="
     soup = BeautifulSoup(page.content,'html.parser')
     nxt = soup.find('li', class_="next")
     while(nxt != None):
         pageNums = soup.find_all('li',class_="number")
         size = len(pageNums) - 1
         pageNum = pageNums[size].find('a').get_text()       
-        newUrl = url + "&page=" + pageNum
+        newUrl = url + urlTag + pageNum
         newPage = requests.get(newUrl)
-        soup = BeautifulSoup(newPage.content,'html')
+        soup = BeautifulSoup(newPage.content,'html.parser')
+        #handles a problem that involves a different web address structure
+        if soup.find('div', class_="error404"):
+            urlTag = "?page="
+            newUrl = url + urlTag + pageNum
+            newPage = requests.get(newUrl)
+            soup = BeautifulSoup(newPage.content,'html.parser')
         nxt = soup.find('li',class_="next")
     number = soup.find_all('li',class_="number")
     size = len(number) - 1
